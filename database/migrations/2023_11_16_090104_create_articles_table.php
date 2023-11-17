@@ -17,6 +17,7 @@ return new class extends Migration
             $table->mediumText('content');
             $table->string('image', 510)->nullable();
             $table->timestamp('published_at');
+            $table->string('data_source')->nullable();
 
             $table->foreignId('source_id')->constrained('sources')
                 ->cascadeOnDelete()

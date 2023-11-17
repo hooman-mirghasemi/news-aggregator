@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\ArticlesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,27 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
 
 
-Route::get('/newsapi', function () {
-    $r = \App\NewsReaders\NewsReaderNewsApi::read();
-    return $r->json();
-});
-
-Route::get('/gardian', function () {
-    $r = \App\NewsReaders\NewsReaderGuardianApis::read();
-    return ($r->json());
-});
-
-Route::get('/gardian/1', function () {
-    $r = \App\NewsReaders\NewsReaderGuardianApis::single();
-    return ($r->json());
-});
-
-Route::get('/world-news', function () {
-    $r = \App\NewsReaders\NewsReaderWorldNews::read();
-    return ($r->json());
-});
+Route::apiResource('/articles', ArticlesController::class)->only(['index', 'show']);

@@ -13,6 +13,7 @@ class NewsApi extends Driver
 {
 
     private string $webServiceBaseUrl = 'https://newsapi.org/v2';
+    private bool $isDeveloperAccount = true;
     public function __construct(protected array $settings)
     {
         if (! data_get($this->settings, 'apikey')) {
@@ -29,6 +30,32 @@ class NewsApi extends Driver
         $url .= '&category=' . $this->category->name;
         $this->processOnePageResults($url, $this->category);
 
+    }
+
+    /**
+     * @param string $url
+     * @param mixed $category
+     * @return void
+     * @throws \Exception
+     */
+    private function processOnePageResults(string $url, Category $category, int $pageNumber = 1): void
+    {
+        $fullUrl = $url . '&page=' . $pageNumber;
+        $response = Http::get($fullUrl);
+        if ($response->json('status') != 'ok') {
+            throw new \Exception('An error occurred through calling newsApi:' . $response->body());
+        }
+        $totalCount = $response->json('totalResults'); //@todo fetch other pages
+        $totalPage = ceil($totalCount / 100);
+        foreach ($response->json('articles') as $jsonArticle) {
+            if ($jsonArticle['title'] == '[Removed]') {
+                continue;
+            }
+            $this->insertArticleToDb($jsonArticle, $category);
+        }
+        if ($totalPage > $pageNumber && !$this->isDeveloperAccount) {
+            $this->processOnePageResults($url, $category, ++$pageNumber);
+        }
     }
 
     /**
@@ -63,35 +90,10 @@ class NewsApi extends Driver
             'content' => $jsonArticle['content'],
             'image' => $jsonArticle['urlToImage'],
             'published_at' => $jsonArticle['publishedAt'] == '1970-01-01 00:00:00' ? $jsonArticle['publishedAt'] : now()->subDay(),
+            'data_source' => 'NewsApi',
             'source_id' => $source->id,
             'author_id' => $author?->id,
             'category_id' => $category->id,
         ]);
-    }
-
-    /**
-     * @param string $url
-     * @param mixed $category
-     * @return void
-     * @throws \Exception
-     */
-    private function processOnePageResults(string $url, Category $category, int $pageNumber = 1): void
-    {
-        $url .= '&page=' . $pageNumber;
-        $response = Http::get($url);
-        if ($response->json('status') != 'ok') {
-            throw new \Exception('An error occurred through calling newsApi');
-        }
-        $totalCount = $response->json('totalResults'); //@todo fetch other pages
-        $totalPage = ceil($totalCount / 100);
-        foreach ($response->json('articles') as $jsonArticle) {
-            if ($jsonArticle['title'] == '[Removed]') {
-                continue;
-            }
-            $this->insertArticleToDb($jsonArticle, $category);
-        }
-        if ($totalPage > $pageNumber) {
-            $this->processOnePageResults($url, $category, ++$pageNumber);
-        }
     }
 }

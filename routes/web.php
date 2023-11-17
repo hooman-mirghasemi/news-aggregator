@@ -17,6 +17,6 @@ Route::get('/', function () {
     $newsReader = resolve(\App\NewsReaders\NewsReaderManager::class);
 
     $category = \App\Models\Category::whereName('health')->first();
-    $newsReader->driver('theguardian')->setFrom(now()->subDays(2))->setCategory($category)->pullNewsToDb();
+    $newsReader->driver('worldnews')->setFrom(now()->subDays(2))->setCategory($category)->pullNewsToDb();
     return view('welcome');
 });

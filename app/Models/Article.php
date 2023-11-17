@@ -15,6 +15,7 @@ class Article extends Model
         'content' ,
         'image',
         'published_at',
+        'data_source',
         'source_id',
         'author_id',
         'category_id',

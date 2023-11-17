@@ -4,7 +4,10 @@ namespace App\Providers;
 
 use App\NewsReaders\Drivers\NewsApi;
 use App\NewsReaders\Drivers\TheGuardian;
+use App\NewsReaders\Drivers\WorldNews;
 use App\NewsReaders\NewsReaderManager;
+use App\Schedule\FetchNews;
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -25,6 +28,11 @@ class AppServiceProvider extends ServiceProvider
             $config = config('news-reader.drivers.theguardian') ?? [];
             return new TheGuardian($config);
         });
+
+        $this->app->bind(WorldNews::class, function () {
+            $config = config('news-reader.drivers.worldnews') ?? [];
+            return new WorldNews($config);
+        });
     }
 
     /**
@@ -32,6 +40,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        $this->app->booted(function () {
+            $schedule = app(Schedule::class);
+            $schedule->call(new FetchNews())
+                ->dailyAt('02:00')
+                ->description(FetchNews::class);
+        });
     }
 }

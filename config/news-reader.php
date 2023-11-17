@@ -27,6 +27,9 @@ return [
         'theguardian' => [
             'apikey' => env('THEGUARDIAN_API_KEY'),
         ],
+        'worldnews' => [
+            'apikey' => env('WORLDNEWS_API_KEY'),
+        ],
 
     ]
 ];
