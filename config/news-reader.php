@@ -22,7 +22,10 @@ return [
     */
     'drivers' => [
         'newsapi' => [
-            'apiKey' => env('NEWSAPI_API_KEY'),
+            'apikey' => env('NEWSAPI_API_KEY'),
+        ],
+        'theguardian' => [
+            'apikey' => env('THEGUARDIAN_API_KEY'),
         ],
 
     ]

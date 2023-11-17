@@ -10,6 +10,7 @@ class Author extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name'];
     /**
      * Author articles
      *

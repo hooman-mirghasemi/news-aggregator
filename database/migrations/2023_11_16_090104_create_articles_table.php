@@ -14,23 +14,28 @@ return new class extends Migration
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('content');
-            $table->string('image');
+            $table->mediumText('content');
+            $table->string('image', 510)->nullable();
             $table->timestamp('published_at');
 
             $table->foreignId('source_id')->constrained('sources')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
 
-            $table->foreignId('author_id')->constrained('authors')
+            $table->foreignId('author_id')
+                ->nullable()
+                ->constrained('authors')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
 
-            $table->foreignId('category_id')->constrained('categories')
+            $table->foreignId('category_id')
+                ->constrained('categories')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
 
             $table->timestamps();
+
+            $table->unique(['title', 'category_id', 'author_id', 'source_id']);
         });
     }
 

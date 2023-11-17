@@ -2,6 +2,7 @@
 
 namespace App\NewsReaders\Contracts;
 
+use App\Models\Category;
 use Carbon\Carbon;
 
 interface Driver
@@ -18,13 +19,12 @@ interface Driver
     /**
      * Add filter search text
      *
-     * @param srting $search
+     * @param srting $category
      *
      * @return self
      */
-    public function setSearchQuery(string $search): self;
+    public function setCategory(Category $category): self;
 
-    public function dedicateAuthor(): string;
-    public function dedicateSource(): string;
+    public function pullNewsToDb(): void;
 
 }

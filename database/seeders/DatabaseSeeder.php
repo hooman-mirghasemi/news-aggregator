@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
         $categories = ['sport', 'health', 'fashion'];
+//        $categories = ['sport'];
 
         foreach ($categories as $categoryName) {
             Category::create([

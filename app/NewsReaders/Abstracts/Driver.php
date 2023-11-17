@@ -2,6 +2,7 @@
 
 namespace App\NewsReaders\Abstracts;
 
+use App\Models\Category;
 use \App\NewsReaders\Contracts\Driver as DriverContract;
 use Carbon\Carbon;
 
@@ -9,18 +10,17 @@ abstract class Driver implements DriverContract
 {
     protected string $apiKey;
     protected Carbon $from;
-    protected string $search;
+    protected Category $category;
 
     public function setFrom(Carbon $date): \App\NewsReaders\Contracts\Driver
     {
-        dd('ok');
         $this->from = $date;
         return $this;
     }
 
-    public function setSearchQuery(string $search): \App\NewsReaders\Contracts\Driver
+    public function setCategory(Category $category): \App\NewsReaders\Contracts\Driver
     {
-        $this->search = $search;
+        $this->category = $category;
         return $this;
     }
 }

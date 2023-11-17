@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     $newsReader = resolve(\App\NewsReaders\NewsReaderManager::class);
 
-    $newsReader->setFrom(now());
-    return $newsReader->dedicateAuthor();
+    $category = \App\Models\Category::whereName('health')->first();
+    $newsReader->driver('theguardian')->setFrom(now()->subDays(2))->setCategory($category)->pullNewsToDb();
     return view('welcome');
 });

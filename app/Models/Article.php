@@ -10,6 +10,20 @@ class Article extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'title',
+        'content' ,
+        'image',
+        'published_at',
+        'source_id',
+        'author_id',
+        'category_id',
+    ];
+
+    protected $casts = [
+        'published_at' => 'datetime',
+    ];
+
     /**
      * The article category
      *
