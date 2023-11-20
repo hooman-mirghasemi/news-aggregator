@@ -15,6 +15,25 @@ class ArticlesController
 {
     use ApiResponseHelpers;
 
+    /**
+     * articles list
+     *
+     * This api return articles paginate also you can set filter or user preferences for order it
+     *
+     * @queryParam filter[search] string search in title and content of articles. Example:sport
+     * @queryParam filter[category_id] integer Filter all articles of category. Example:1
+     * @queryParam filter[source_id] integer Filter all articles in specific source. Example:2
+     * @queryParam filter[from_date] date Filter all articles published after date. Example:2023-11-15
+     * @queryParam filter[to_date] date Filter all articles published before date. Example:2023-11-16
+     * @queryParam preferences[source_id] order for user preferences source, (first show articles from these sources then other articles). Example:8,9
+     * @queryParam preferences[category_id] order for user preferences categories, (first show articles from these categories then other articles). Example:1,2
+     * @queryParam preferences[author_id] order for user preferences author, (first show articles from these authors then other articles). Example:51
+     *
+     * @apiResourceCollection App\Http\Resources\ArticleCollection
+     *
+     * @apiResourceModel App\Models\Article paginate=10
+     *
+     */
     public function index(): JsonResponse
     {
         $articlesQuery = QueryBuilder::for(Article::class)
@@ -51,6 +70,19 @@ class ArticlesController
         return $this->respondOk(['articles' => new ArticleCollection($articles)]);
     }
 
+    /**
+     * article show
+     *
+     * Get full details of an article.
+     *
+     *
+     * @urlParam article_id integer id of the article.
+     *
+     * @apiResource App\Http\Resources\ArticleResource
+     *
+     * @apiResourceModel App\Models\Article
+     *
+     */
     public function show(Article $article): JsonResponse
     {
         return $this->respondOk(['articles' => new ArticleResource($article)]);

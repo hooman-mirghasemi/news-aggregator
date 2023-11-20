@@ -1,0 +1,165 @@
+name: Endpoints
+description: ''
+endpoints:
+  -
+    httpMethods:
+      - GET
+    uri: api/articles
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'articles list'
+      description: 'This api return articles paginate also you can set filter or user preferences for order it'
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      'filter[search]':
+        name: 'filter[search]'
+        description: 'search in title and content of articles.'
+        required: false
+        example: sport
+        type: string
+        enumValues: []
+        custom: []
+      'filter[category_id]':
+        name: 'filter[category_id]'
+        description: 'Filter all articles of category.'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        custom: []
+      'filter[source_id]':
+        name: 'filter[source_id]'
+        description: 'Filter all articles in specific source.'
+        required: false
+        example: 2
+        type: integer
+        enumValues: []
+        custom: []
+      'filter[from_date]':
+        name: 'filter[from_date]'
+        description: 'date Filter all articles published after date.'
+        required: false
+        example: '2023-11-15'
+        type: string
+        enumValues: []
+        custom: []
+      'filter[to_date]':
+        name: 'filter[to_date]'
+        description: 'date Filter all articles published before date.'
+        required: false
+        example: '2023-11-16'
+        type: string
+        enumValues: []
+        custom: []
+      'preferences[source_id]':
+        name: 'preferences[source_id]'
+        description: 'order for user preferences source, (first show articles from these sources then other articles).'
+        required: false
+        example: '8,9'
+        type: string
+        enumValues: []
+        custom: []
+      'preferences[category_id]':
+        name: 'preferences[category_id]'
+        description: 'order for user preferences categories, (first show articles from these categories then other articles).'
+        required: false
+        example: '1,2'
+        type: string
+        enumValues: []
+        custom: []
+      'preferences[author_id]':
+        name: 'preferences[author_id]'
+        description: 'order for user preferences author, (first show articles from these authors then other articles).'
+        required: false
+        example: '51'
+        type: string
+        enumValues: []
+        custom: []
+    cleanQueryParameters:
+      'filter[search]': sport
+      'filter[category_id]': 1
+      'filter[source_id]': 2
+      'filter[from_date]': '2023-11-15'
+      'filter[to_date]': '2023-11-16'
+      'preferences[source_id]': '8,9'
+      'preferences[category_id]': '1,2'
+      'preferences[author_id]': '51'
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"count":2,"total":2,"prev":null,"next":null,"data":[{"id":1,"title":"Anushka Sharma calls husband Virat Kohli ''God''s child'' as she showers praises on him for his record of 50 ODI centuries | Etimes - Times of India Videos - Times of India","content":"Nov 16, 2023, 12:39PM ISTSource: etimes.inAnushka Sharma recently showered praises on her husband Virat Kohli for breaking Sachin Tendulkars record and scoring the highest number of ODI centuries by \u2026 [+1313 chars]","image":"https:\/\/timesofindia.indiatimes.com\/photo\/msid-105254708,imgsize-63246.cms","published_at":"2023-11-16T10:36:31.000000Z","source":"The Times of India","author":null,"category":"sport"},{"id":1,"title":"Anushka Sharma calls husband Virat Kohli ''God''s child'' as she showers praises on him for his record of 50 ODI centuries | Etimes - Times of India Videos - Times of India","content":"Nov 16, 2023, 12:39PM ISTSource: etimes.inAnushka Sharma recently showered praises on her husband Virat Kohli for breaking Sachin Tendulkars record and scoring the highest number of ODI centuries by \u2026 [+1313 chars]","image":"https:\/\/timesofindia.indiatimes.com\/photo\/msid-105254708,imgsize-63246.cms","published_at":"2023-11-16T10:36:31.000000Z","source":"The Times of India","author":null,"category":"sport"}],"links":{"first":"\/?page=1","last":"\/?page=1","prev":null,"next":null},"meta":{"current_page":1,"from":1,"last_page":1,"links":[{"url":null,"label":"&laquo; Previous","active":false},{"url":"\/?page=1","label":"1","active":true},{"url":null,"label":"Next &raquo;","active":false}],"path":"\/","per_page":10,"to":2,"total":2}}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/articles/{id}'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'article show'
+      description: 'Get full details of an article.'
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the article.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        custom: []
+      article_id:
+        name: article_id
+        description: 'id of the article.'
+        required: false
+        example: 5
+        type: integer
+        enumValues: []
+        custom: []
+    cleanUrlParameters:
+      id: 1
+      article_id: 5
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"data":{"id":1,"title":"Anushka Sharma calls husband Virat Kohli ''God''s child'' as she showers praises on him for his record of 50 ODI centuries | Etimes - Times of India Videos - Times of India","content":"Nov 16, 2023, 12:39PM ISTSource: etimes.inAnushka Sharma recently showered praises on her husband Virat Kohli for breaking Sachin Tendulkars record and scoring the highest number of ODI centuries by \u2026 [+1313 chars]","image":"https:\/\/timesofindia.indiatimes.com\/photo\/msid-105254708,imgsize-63246.cms","published_at":"2023-11-16T10:36:31.000000Z","source":"The Times of India","author":null,"category":"sport"}}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
